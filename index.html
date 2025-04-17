@@ -11,6 +11,13 @@
     <header>
         <div class="container">
             <h1>MyShop</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">Tentang</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Kontak</a></li>
+                </ul>
+            </nav>
             <div class="cart-icon">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count">0</span>
@@ -19,37 +26,51 @@
     </header>
 
     <main class="container">
-        <section class="products">
-            <div class="product" data-id="1">
-                <img src="https://via.placeholder.com/300" alt="Product 1">
-                <h2 class="product-title">Product 1</h2>
-                <p class="price">Rp 150.000</p>
-                <button class="add-to-cart">Add to Cart</button>
+        <!-- Home Page -->
+        <section class="page home-page active">
+            <div class="products"></div>
+            <div class="pagination"></div>
+        </section>
+
+        <!-- About Page -->
+        <section class="page about-page">
+            <h2>Tentang Kami</h2>
+            <div class="page-content">
+                <p>Selamat datang di MyShop, toko online terpercaya sejak 2023. Kami menyediakan berbagai produk berkualitas dengan harga terjangkau.</p>
+                <p>Visi kami adalah memberikan pengalaman berbelanja online yang mudah, aman, dan menyenangkan bagi semua pelanggan.</p>
+                <p>Tim kami terdiri dari profesional yang berdedikasi untuk memberikan pelayanan terbaik kepada Anda.</p>
             </div>
-            
-            <div class="product" data-id="2">
-                <img src="https://via.placeholder.com/300" alt="Product 2">
-                <h2 class="product-title">Product 2</h2>
-                <p class="price">Rp 250.000</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
-            
-            <div class="product" data-id="3">
-                <img src="https://via.placeholder.com/300" alt="Product 3">
-                <h2 class="product-title">Product 3</h2>
-                <p class="price">Rp 350.000</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
-            
-            <div class="product" data-id="4">
-                <img src="https://via.placeholder.com/300" alt="Product 4">
-                <h2 class="product-title">Product 4</h2>
-                <p class="price">Rp 450.000</p>
-                <button class="add-to-cart">Add to Cart</button>
+        </section>
+
+        <!-- Contact Page -->
+        <section class="page contact-page">
+            <h2>Hubungi Kami</h2>
+            <div class="page-content">
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> +62 857 7300 9666</p>
+                    <p><i class="fas fa-envelope"></i> info@myshop.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Contoh No. 123, Jakarta, Indonesia</p>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Kirim Pesan</button>
+                </form>
             </div>
         </section>
     </main>
 
+    <!-- Cart Overlay -->
     <div class="cart-overlay">
         <div class="cart">
             <span class="close-cart"><i class="fas fa-times"></i></span>
@@ -65,6 +86,7 @@
         </div>
     </div>
 
+    <!-- Product Modal -->
     <div class="product-modal">
         <div class="modal-content">
             <span class="close-modal"><i class="fas fa-times"></i></span>
@@ -73,6 +95,38 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MyShop</h3>
+                    <p>Toko online terpercaya dengan berbagai produk berkualitas.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="#" class="footer-link" data-page="home">Home</a></li>
+                        <li><a href="#" class="footer-link" data-page="about">Tentang</a></li>
+                        <li><a href="#" class="footer-link" data-page="contact">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Ikuti Kami</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MyShop. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="app.js"></script>
 </body>
