@@ -106,10 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const products = [
         {
             id: 1,
-            title: 'Product 1',
-            price: 150000,
-            image: 'https://via.placeholder.com/300',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            title: 'Parfum Laundry Sokaraja',
+            price: 155000,
+            image: 'https://qph.cf2.quoracdn.net/main-qimg-494f857db88e7b1a650aadc52c10ec2d',
+            description: 'Parfum Laundry Sokaraja di Kalibagor, Banyumas, menawarkan solusi praktis bagi masyarakat agar pakaian wangi dan bersih. Dengan keunggulan gratis deterjen bubuk, gratis ongkos kirim, dan kualitas cucian terbaik, Parfum Laundry Sokaraja menjadi pilihan terpercaya bagi warga Kalibagor dan sekitarnya.'
         },
         {
             id: 2,
