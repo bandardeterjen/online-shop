@@ -389,24 +389,6 @@ header {
     }
 }
 
-/* Navigation */
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-}
-
-nav a:hover, nav a.active {
-    background: rgba(255,255,255,0.2);
-}
 
 /* Pages */
 .page {
