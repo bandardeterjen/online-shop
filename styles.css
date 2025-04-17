@@ -573,8 +573,6 @@ footer {
     }
 }
 
-/* Add these styles to your existing CSS */
-
 /* Search Styles */
 .search-container {
     position: relative;
@@ -587,6 +585,7 @@ footer {
     top: 50%;
     transform: translateY(-50%);
     color: #777;
+    pointer-events: none;
 }
 
 .search-input {
@@ -618,12 +617,17 @@ footer {
     display: none;
 }
 
+.search-results.active {
+    display: block;
+}
+
 .search-result-item {
     padding: 10px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
     display: flex;
     align-items: center;
+    transition: background 0.2s;
 }
 
 .search-result-item:hover {
@@ -640,12 +644,20 @@ footer {
 .search-result-info h4 {
     margin: 0;
     font-size: 0.9rem;
+    color: #333;
 }
 
 .search-result-info .price {
     color: #e74c3c;
     font-weight: bold;
     font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.no-results {
+    padding: 10px;
+    color: #777;
+    text-align: center;
 }
 
 /* Mobile search styles */
