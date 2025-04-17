@@ -340,6 +340,71 @@ document.addEventListener('DOMContentLoaded', () => {
         // Optional: Reset form after submission
         whatsappForm.reset();
     }
+// DOM Elements for search
+const searchIcon = document.querySelector('.search-icon');
+const searchInput = document.querySelector('.search-input');
+const searchResults = document.querySelector('.search-results');
+
+// Search functionality
+function handleSearch() {
+    const searchTerm = searchInput.value.toLowerCase();
+    
+    if (searchTerm.length < 2) {
+        searchResults.style.display = 'none';
+        return;
+    }
+    
+    const matchedProducts = products.filter(product => 
+        product.title.toLowerCase().includes(searchTerm) || 
+        product.description.toLowerCase().includes(searchTerm)
+    );
+    
+    displaySearchResults(matchedProducts);
+}
+
+function displaySearchResults(results) {
+    if (results.length === 0) {
+        searchResults.innerHTML = '<div class="search-result-item">No products found</div>';
+        searchResults.style.display = 'block';
+        return;
+    }
+    
+    searchResults.innerHTML = results.map(product => `
+        <div class="search-result-item" data-id="${product.id}">
+            <img src="${product.image}" alt="${product.title}">
+            <div class="search-result-info">
+                <h4>${product.title}</h4>
+                <p class="price">${formatRupiah(product.price)}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    searchResults.style.display = 'block';
+}
+
+// Event listeners for search
+searchInput.addEventListener('input', handleSearch);
+searchInput.addEventListener('focus', () => {
+    if (searchInput.value.length >= 2) {
+        searchResults.style.display = 'block';
+    }
+});
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-container')) {
+        searchResults.style.display = 'none';
+    }
+});
+
+searchResults.addEventListener('click', (e) => {
+    const resultItem = e.target.closest('.search-result-item');
+    if (resultItem) {
+        const productId = parseInt(resultItem.dataset.id);
+        showProductDetails(productId);
+        searchInput.value = '';
+        searchResults.style.display = 'none';
+    }
+});
 
     // Event Listeners
     hamburgerMenu.addEventListener('click', () => {
@@ -443,68 +508,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// DOM Elements for search
-const searchIcon = document.querySelector('.search-icon');
-const searchInput = document.querySelector('.search-input');
-const searchResults = document.querySelector('.search-results');
-
-// Search functionality
-function handleSearch() {
-    const searchTerm = searchInput.value.toLowerCase();
-    
-    if (searchTerm.length < 2) {
-        searchResults.style.display = 'none';
-        return;
-    }
-    
-    const matchedProducts = products.filter(product => 
-        product.title.toLowerCase().includes(searchTerm) || 
-        product.description.toLowerCase().includes(searchTerm)
-    );
-    
-    displaySearchResults(matchedProducts);
-}
-
-function displaySearchResults(results) {
-    if (results.length === 0) {
-        searchResults.innerHTML = '<div class="search-result-item">No products found</div>';
-        searchResults.style.display = 'block';
-        return;
-    }
-    
-    searchResults.innerHTML = results.map(product => `
-        <div class="search-result-item" data-id="${product.id}">
-            <img src="${product.image}" alt="${product.title}">
-            <div class="search-result-info">
-                <h4>${product.title}</h4>
-                <p class="price">${formatRupiah(product.price)}</p>
-            </div>
-        </div>
-    `).join('');
-    
-    searchResults.style.display = 'block';
-}
-
-// Event listeners for search
-searchInput.addEventListener('input', handleSearch);
-searchInput.addEventListener('focus', () => {
-    if (searchInput.value.length >= 2) {
-        searchResults.style.display = 'block';
-    }
-});
-
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-container')) {
-        searchResults.style.display = 'none';
-    }
-});
-
-searchResults.addEventListener('click', (e) => {
-    const resultItem = e.target.closest('.search-result-item');
-    if (resultItem) {
-        const productId = parseInt(resultItem.dataset.id);
-        showProductDetails(productId);
-        searchInput.value = '';
-        searchResults.style.display = 'none';
-    }
-});
