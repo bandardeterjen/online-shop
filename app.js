@@ -12,39 +12,104 @@ document.addEventListener('DOMContentLoaded', () => {
     const productModal = document.querySelector('.product-modal');
     const closeModal = document.querySelector('.close-modal');
     const modalBody = document.querySelector('.modal-body');
+    const paginationContainer = document.querySelector('.pagination');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const footerLinks = document.querySelectorAll('.footer-link');
+    const contactForm = document.querySelector('.contact-form');
+    const pages = document.querySelectorAll('.page');
 
     // Cart array
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Setup products
+    // Pagination variables
+    const productsPerPage = 8;
+    let currentPage = 1;
+
+    // Setup products (now with 12 products for pagination demo)
     const products = [
         {
             id: 1,
             title: 'Product 1',
             price: 150000,
             image: 'https://via.placeholder.com/300',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.'
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
         },
         {
             id: 2,
             title: 'Product 2',
             price: 250000,
             image: 'https://via.placeholder.com/300',
-            description: 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.'
+            description: 'Vestibulum ante ipsum primis in faucibus orci luctus.'
         },
         {
             id: 3,
             title: 'Product 3',
             price: 350000,
             image: 'https://via.placeholder.com/300',
-            description: 'Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.'
+            description: 'Curabitur non nulla sit amet nisl tempus convallis.'
         },
         {
             id: 4,
             title: 'Product 4',
             price: 450000,
             image: 'https://via.placeholder.com/300',
-            description: 'Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Vivamus suscipit tortor eget felis porttitor volutpat.'
+            description: 'Pellentesque in ipsum id orci porta dapibus.'
+        },
+        {
+            id: 5,
+            title: 'Product 5',
+            price: 550000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Nulla quis lorem ut libero malesuada feugiat.'
+        },
+        {
+            id: 6,
+            title: 'Product 6',
+            price: 650000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Vivamus magna justo, lacinia eget consectetur sed.'
+        },
+        {
+            id: 7,
+            title: 'Product 7',
+            price: 750000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Cras ultricies ligula sed magna dictum porta.'
+        },
+        {
+            id: 8,
+            title: 'Product 8',
+            price: 850000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Donec sollicitudin molestie malesuada.'
+        },
+        {
+            id: 9,
+            title: 'Product 9',
+            price: 950000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Praesent sapien massa, convallis a pellentesque nec.'
+        },
+        {
+            id: 10,
+            title: 'Product 10',
+            price: 1050000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Curabitur arcu erat, accumsan id imperdiet et.'
+        },
+        {
+            id: 11,
+            title: 'Product 11',
+            price: 1150000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Mauris blandit aliquet elit, eget tincidunt nibh.'
+        },
+        {
+            id: 12,
+            title: 'Product 12',
+            price: 1250000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Proin eget tortor risus. Cras ultricies ligula.'
         }
     ];
 
@@ -191,6 +256,63 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(whatsappUrl, '_blank');
     }
 
+    // Render products for current page
+    function renderProducts() {
+        const startIndex = (currentPage - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const productsToShow = products.slice(startIndex, endIndex);
+
+        productsContainer.innerHTML = productsToShow.map(product => `
+            <div class="product" data-id="${product.id}">
+                <img src="${product.image}" alt="${product.title}">
+                <h2 class="product-title">${product.title}</h2>
+                <p class="price">${formatRupiah(product.price)}</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        `).join('');
+
+        renderPagination();
+    }
+
+    // Render pagination buttons
+    function renderPagination() {
+        const totalPages = Math.ceil(products.length / productsPerPage);
+        paginationContainer.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            if (i === currentPage) {
+                button.classList.add('active');
+            }
+            button.addEventListener('click', () => {
+                currentPage = i;
+                renderProducts();
+            });
+            paginationContainer.appendChild(button);
+        }
+    }
+
+    // Switch between pages
+    function switchPage(pageName) {
+        pages.forEach(page => {
+            page.classList.remove('active');
+            if (page.classList.contains(`${pageName}-page`)) {
+                page.classList.add('active');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.dataset.page === pageName) {
+                link.classList.add('active');
+            }
+        });
+
+        // Scroll to top when switching pages
+        window.scrollTo(0, 0);
+    }
+
     // Event Listeners
     cartIcon.addEventListener('click', () => {
         cartOverlay.style.display = 'flex';
@@ -207,6 +329,29 @@ document.addEventListener('DOMContentLoaded', () => {
         productModal.style.display = 'none';
     });
 
+    // Navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage(link.dataset.page);
+        });
+    });
+
+    // Footer links
+    footerLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage(link.dataset.page);
+        });
+    });
+
+    // Contact form submission
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Pesan Anda telah terkirim! Kami akan segera menghubungi Anda.');
+        contactForm.reset();
+    });
+
     // Close modals when clicking outside
     window.addEventListener('click', (e) => {
         if (e.target === cartOverlay) {
@@ -217,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add to cart buttons
+    // Add to cart buttons - delegated event listener
     productsContainer.addEventListener('click', (e) => {
         // Product title click
         if (e.target.classList.contains('product-title')) {
@@ -262,6 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize cart
+    // Initialize
+    renderProducts();
     updateCart();
 });
