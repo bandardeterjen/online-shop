@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const hamburgerMenu = document.querySelector('.hamburger-menu');
@@ -22,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pages = document.querySelectorAll('.page');
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
+
     // Cart array
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const products = [
         {
             id: 1,
-            title: 'Parfum Laundry Sokaraja',
-            price: 155000,
-            image: 'https://qph.cf2.quoracdn.net/main-qimg-494f857db88e7b1a650aadc52c10ec2d',
-            description: 'Parfum Laundry Sokaraja di Kalibagor, Banyumas, menawarkan solusi praktis bagi masyarakat agar pakaian wangi dan bersih. Dengan keunggulan gratis deterjen bubuk, gratis ongkos kirim, dan kualitas cucian terbaik, Parfum Laundry Sokaraja menjadi pilihan terpercaya bagi warga Kalibagor dan sekitarnya.'
+            title: 'Product 1',
+            price: 150000,
+            image: 'https://via.placeholder.com/300',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
         },
         {
             id: 2,
@@ -297,6 +297,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Search functionality
+    function performSearch(searchTerm) {
+        searchTerm = searchTerm.toLowerCase().trim();
+        
+        if (searchTerm.length < 2) {
+            searchResults.classList.remove('active');
+            return;
+        }
+        
+        const matchedProducts = products.filter(product => {
+            return (
+                product.title.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm)
+            );
+        });
+        
+        displaySearchResults(matchedProducts);
+    }
+
+    function displaySearchResults(results) {
+        searchResults.innerHTML = '';
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = '<div class="no-results">No products found</div>';
+            searchResults.classList.add('active');
+            return;
+        }
+        
+        results.forEach(product => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'search-result-item';
+            resultItem.dataset.id = product.id;
+            resultItem.innerHTML = `
+                <img src="${product.image}" alt="${product.title}">
+                <div class="search-result-info">
+                    <h4>${product.title}</h4>
+                    <p class="price">${formatRupiah(product.price)}</p>
+                </div>
+            `;
+            searchResults.appendChild(resultItem);
+        });
+        
+        searchResults.classList.add('active');
+    }
+
     // Switch between pages
     function switchPage(pageName) {
         pages.forEach(page => {
@@ -340,71 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Optional: Reset form after submission
         whatsappForm.reset();
     }
-// DOM Elements for search
-const searchIcon = document.querySelector('.search-icon');
-const searchInput = document.querySelector('.search-input');
-const searchResults = document.querySelector('.search-results');
-
-// Search functionality
-function handleSearch() {
-    const searchTerm = searchInput.value.toLowerCase();
-    
-    if (searchTerm.length < 2) {
-        searchResults.style.display = 'none';
-        return;
-    }
-    
-    const matchedProducts = products.filter(product => 
-        product.title.toLowerCase().includes(searchTerm) || 
-        product.description.toLowerCase().includes(searchTerm)
-    );
-    
-    displaySearchResults(matchedProducts);
-}
-
-function displaySearchResults(results) {
-    if (results.length === 0) {
-        searchResults.innerHTML = '<div class="search-result-item">No products found</div>';
-        searchResults.style.display = 'block';
-        return;
-    }
-    
-    searchResults.innerHTML = results.map(product => `
-        <div class="search-result-item" data-id="${product.id}">
-            <img src="${product.image}" alt="${product.title}">
-            <div class="search-result-info">
-                <h4>${product.title}</h4>
-                <p class="price">${formatRupiah(product.price)}</p>
-            </div>
-        </div>
-    `).join('');
-    
-    searchResults.style.display = 'block';
-}
-
-// Event listeners for search
-searchInput.addEventListener('input', handleSearch);
-searchInput.addEventListener('focus', () => {
-    if (searchInput.value.length >= 2) {
-        searchResults.style.display = 'block';
-    }
-});
-
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-container')) {
-        searchResults.style.display = 'none';
-    }
-});
-
-searchResults.addEventListener('click', (e) => {
-    const resultItem = e.target.closest('.search-result-item');
-    if (resultItem) {
-        const productId = parseInt(resultItem.dataset.id);
-        showProductDetails(productId);
-        searchInput.value = '';
-        searchResults.style.display = 'none';
-    }
-});
 
     // Event Listeners
     hamburgerMenu.addEventListener('click', () => {
@@ -445,13 +425,30 @@ searchResults.addEventListener('click', (e) => {
     // WhatsApp form submission
     whatsappForm.addEventListener('submit', handleWhatsAppSubmit);
 
-    // Close modals when clicking outside
-    window.addEventListener('click', (e) => {
-        if (e.target === cartOverlay) {
-            cartOverlay.style.display = 'none';
+    // Search functionality
+    searchInput.addEventListener('input', (e) => {
+        performSearch(e.target.value);
+    });
+
+    searchInput.addEventListener('focus', () => {
+        if (searchInput.value.length >= 2) {
+            performSearch(searchInput.value);
         }
-        if (e.target === productModal) {
-            productModal.style.display = 'none';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-container')) {
+            searchResults.classList.remove('active');
+        }
+    });
+
+    searchResults.addEventListener('click', (e) => {
+        const resultItem = e.target.closest('.search-result-item');
+        if (resultItem) {
+            const productId = parseInt(resultItem.dataset.id);
+            showProductDetails(productId);
+            searchInput.value = '';
+            searchResults.classList.remove('active');
         }
     });
 
@@ -465,7 +462,8 @@ searchResults.addEventListener('click', (e) => {
 
         // Add to cart button click
         if (e.target.classList.contains('add-to-cart')) {
-            const productId = parseInt(e.target.closest('.product').dataset.id);
+            const productId =
+                            const productId = parseInt(e.target.closest('.product').dataset.id);
             addToCart(productId);
         }
     });
@@ -505,6 +503,3 @@ searchResults.addEventListener('click', (e) => {
     renderProducts();
     updateCart();
 });
-
-
-
