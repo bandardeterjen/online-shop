@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
     const cartIcon = document.querySelector('.cart-icon');
     const cartOverlay = document.querySelector('.cart-overlay');
     const closeCart = document.querySelector('.close-cart');
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const paginationContainer = document.querySelector('.pagination');
     const navLinks = document.querySelectorAll('.nav-link');
     const footerLinks = document.querySelectorAll('.footer-link');
-    const contactForm = document.querySelector('.contact-form');
+    const whatsappForm = document.getElementById('whatsappForm');
     const pages = document.querySelectorAll('.page');
 
     // Cart array
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const productsPerPage = 8;
     let currentPage = 1;
 
-    // Setup products (now with 12 products for pagination demo)
+    // Setup products
     const products = [
         {
             id: 1,
@@ -309,11 +311,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Scroll to top when switching pages
+        // Close mobile menu when switching pages
+        if (window.innerWidth <= 768) {
+            navMenu.classList.remove('active');
+        }
+
         window.scrollTo(0, 0);
     }
 
+    // WhatsApp Form Submission
+    function handleWhatsAppSubmit(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        
+        const whatsappNumber = '6285773009666';
+        const text = `Halo, saya ${name}%0A%0A${message}%0A%0AEmail: ${email || 'Tidak diisi'}%0ANomor HP: ${phone}`;
+        
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${text}`;
+        
+        window.open(whatsappUrl, '_blank');
+        
+        // Optional: Reset form after submission
+        whatsappForm.reset();
+    }
+
     // Event Listeners
+    hamburgerMenu.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+
     cartIcon.addEventListener('click', () => {
         cartOverlay.style.display = 'flex';
     });
@@ -345,12 +375,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Contact form submission
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Pesan Anda telah terkirim! Kami akan segera menghubungi Anda.');
-        contactForm.reset();
-    });
+    // WhatsApp form submission
+    whatsappForm.addEventListener('submit', handleWhatsAppSubmit);
 
     // Close modals when clicking outside
     window.addEventListener('click', (e) => {
@@ -362,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add to cart buttons - delegated event listener
+    // Product interactions
     productsContainer.addEventListener('click', (e) => {
         // Product title click
         if (e.target.classList.contains('product-title')) {
@@ -377,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cart item interactions
+    // Cart interactions
     cartContent.addEventListener('click', (e) => {
         // Remove item
         if (e.target.classList.contains('cart-item-remove')) {
@@ -398,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Modal add to cart button
+    // Modal interactions
     modalBody.addEventListener('click', (e) => {
         if (e.target.classList.contains('add-to-cart-modal')) {
             const productId = parseInt(e.target.dataset.id);
@@ -408,70 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initialize
+    switchPage('home');
     renderProducts();
     updateCart();
 });
-// Add these to your existing JavaScript
-
-// Hamburger Menu Toggle
-const hamburgerMenu = document.querySelector('.hamburger-menu');
-const navMenu = document.querySelector('.nav-menu');
-
-hamburgerMenu.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
-            navMenu.classList.remove('active');
-        }
-    });
-});
-
-// WhatsApp Form Submission
-const whatsappForm = document.getElementById('whatsappForm');
-
-whatsappForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    const whatsappNumber = '6285773009666';
-    const text = `Halo, saya ${name}%0A%0A${message}%0A%0AEmail: ${email}%0ANomor HP: ${phone}`;
-    
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${text}`;
-    
-    window.open(whatsappUrl, '_blank');
-    
-    // Optional: Reset form after submission
-    whatsappForm.reset();
-});
-
-// Make sure to update your existing switchPage function to close mobile menu
-function switchPage(pageName) {
-    pages.forEach(page => {
-        page.classList.remove('active');
-        if (page.classList.contains(`${pageName}-page`)) {
-            page.classList.add('active');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.dataset.page === pageName) {
-            link.classList.add('active');
-        }
-    });
-
-    // Close mobile menu when switching pages
-    if (window.innerWidth <= 768) {
-        navMenu.classList.remove('active');
-    }
-
-    window.scrollTo(0, 0);
-}
