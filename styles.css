@@ -97,93 +97,6 @@ header .container {
     font-size: 0.8rem;
 }
 
-/* Search Styles */
-.search-container {
-    position: relative;
-    margin-left: 20px;
-}
-
-.search-icon {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #777;
-    pointer-events: none;
-}
-
-.search-input {
-    padding: 8px 15px 8px 35px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    width: 200px;
-    transition: width 0.3s;
-}
-
-.search-input:focus {
-    width: 250px;
-    outline: none;
-    border-color: #2c3e50;
-}
-
-.search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-height: 400px;
-    overflow-y: auto;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    z-index: 100;
-    display: none;
-}
-
-.search-results.active {
-    display: block;
-}
-
-.search-result-item {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background 0.2s;
-}
-
-.search-result-item:hover {
-    background: #f5f5f5;
-}
-
-.search-result-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-}
-
-.search-result-info h4 {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.search-result-info .price {
-    color: #e74c3c;
-    font-weight: bold;
-    font-size: 0.8rem;
-    margin-top: 5px;
-}
-
-.no-results {
-    padding: 10px;
-    color: #777;
-    text-align: center;
-}
-
 /* Products Grid */
 .products {
     display: grid;
@@ -634,24 +547,6 @@ footer {
     
     .nav-menu li {
         margin: 10px 0;
-    }
-    
-    .search-container {
-        margin: 15px 0;
-        width: 100%;
-    }
-    
-    .search-input {
-        width: 100%;
-    }
-    
-    .search-input:focus {
-        width: 100%;
-    }
-    
-    .search-results {
-        width: calc(100% - 40px);
-        left: 20px;
     }
     
     .cart-icon {
