@@ -9,22 +9,30 @@ body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     background-color: #f5f5f5;
+    color: #333;
 }
 
-/* Header and Navigation Styles */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header Styles */
 header {
     background-color: #2c3e50;
+    color: white;
     padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.container {
+header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
 }
 
 .logo img {
@@ -74,61 +82,21 @@ header {
     margin-left: 20px;
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-    .hamburger-menu {
-        display: block;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background-color: #2c3e50;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-        transition: left 0.3s ease;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-menu ul {
-        flex-direction: column;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    
-    .nav-menu li {
-        margin: 10px 0;
-    }
-    
-    .cart-icon {
-        margin-left: 0;
-        margin-top: 20px;
-    }
-}
-
-/* Contact Form Styles */
-.contact-form button {
-    background-color: #25D366; /* WhatsApp green */
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #e74c3c;
     color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    transition: background-color 0.3s;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
 }
 
-.contact-form button:hover {
-    background-color: #128C7E;
-}
 /* Products Grid */
 .products {
     display: grid;
@@ -368,32 +336,11 @@ header {
     margin-top: 10px;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .modal-body {
-        flex-direction: column;
-    }
-    
-    .products {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-}
-
-@media (max-width: 480px) {
-    .products {
-        grid-template-columns: 1fr;
-    }
-    
-    .cart {
-        width: 100%;
-    }
-}
-
-
 /* Pages */
 .page {
     display: none;
     padding: 20px 0;
+    min-height: calc(100vh - 200px);
 }
 
 .page.active {
@@ -468,13 +415,19 @@ header {
 }
 
 .contact-form button {
-    padding: 10px 20px;
-    background: #2c3e50;
+    padding: 12px 20px;
+    background-color: #25D366;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    align-self: flex-start;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #128C7E;
 }
 
 /* Pagination */
@@ -563,26 +516,56 @@ footer {
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Responsive Adjustments */
+/* Responsive Styles */
 @media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        gap: 15px;
+    .hamburger-menu {
+        display: block;
     }
     
-    nav ul {
-        gap: 10px;
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #2c3e50;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        transition: left 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu ul {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .nav-menu li {
+        margin: 10px 0;
+    }
+    
+    .cart-icon {
+        margin-left: 0;
+        margin-top: 20px;
     }
     
     .contact-page .page-content {
         grid-template-columns: 1fr;
     }
+    
+    .products {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
 }
 
 @media (max-width: 480px) {
-    nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
+    .products {
+        grid-template-columns: 1fr;
     }
     
     .pagination {
