@@ -49,35 +49,36 @@
             </div>
         </section>
 
+        <!-- Contact Page -->
         <section class="page contact-page">
-        <h2>Hubungi Kami</h2>
-        <div class="page-content">
-            <div class="contact-info">
-                <p><i class="fas fa-phone"></i> +62 857 7300 9666</p>
-                <p><i class="fas fa-envelope"></i> info@myshop.com</p>
-                <p><i class="fas fa-map-marker-alt"></i> Jl. Contoh No. 123, Jakarta, Indonesia</p>
+            <h2>Hubungi Kami</h2>
+            <div class="page-content">
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> +62 857 7300 9666</p>
+                    <p><i class="fas fa-envelope"></i> info@myshop.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Contoh No. 123, Jakarta, Indonesia</p>
+                </div>
+                <form class="contact-form" id="whatsappForm">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nomor WhatsApp</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Kirim via WhatsApp</button>
+                </form>
             </div>
-            <form class="contact-form" id="whatsappForm">
-                <div class="form-group">
-                    <label for="name">Nama</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Nomor WhatsApp</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Pesan</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit">Kirim via WhatsApp</button>
-            </form>
-        </div>
-    </section>
+        </section>
     </main>
 
     <!-- Cart Overlay -->
