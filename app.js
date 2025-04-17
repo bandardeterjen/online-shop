@@ -1,78 +1,4 @@
-// Add these variables at the top with other DOM elements
-const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
 
-// Add this function with your other functions
-function performSearch(searchTerm) {
-    searchTerm = searchTerm.toLowerCase().trim();
-    
-    if (searchTerm.length < 2) {
-        searchResults.classList.remove('active');
-        return;
-    }
-    
-    const matchedProducts = products.filter(product => {
-        return (
-            product.title.toLowerCase().includes(searchTerm) ||
-            product.description.toLowerCase().includes(searchTerm)
-        );
-    });
-    
-    displaySearchResults(matchedProducts);
-}
-
-function displaySearchResults(results) {
-    searchResults.innerHTML = '';
-    
-    if (results.length === 0) {
-        searchResults.innerHTML = '<div class="no-results">No products found</div>';
-        searchResults.classList.add('active');
-        return;
-    }
-    
-    results.forEach(product => {
-        const resultItem = document.createElement('div');
-        resultItem.className = 'search-result-item';
-        resultItem.dataset.id = product.id;
-        resultItem.innerHTML = `
-            <img src="${product.image}" alt="${product.title}">
-            <div class="search-result-info">
-                <h4>${product.title}</h4>
-                <p class="price">${formatRupiah(product.price)}</p>
-            </div>
-        `;
-        searchResults.appendChild(resultItem);
-    });
-    
-    searchResults.classList.add('active');
-}
-
-// Add these event listeners at the bottom with others
-searchInput.addEventListener('input', (e) => {
-    performSearch(e.target.value);
-});
-
-searchInput.addEventListener('focus', () => {
-    if (searchInput.value.length >= 2) {
-        performSearch(searchInput.value);
-    }
-});
-
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-container')) {
-        searchResults.classList.remove('active');
-    }
-});
-
-searchResults.addEventListener('click', (e) => {
-    const resultItem = e.target.closest('.search-result-item');
-    if (resultItem) {
-        const productId = parseInt(resultItem.dataset.id);
-        showProductDetails(productId);
-        searchInput.value = '';
-        searchResults.classList.remove('active');
-    }
-});
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const hamburgerMenu = document.querySelector('.hamburger-menu');
@@ -94,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const footerLinks = document.querySelectorAll('.footer-link');
     const whatsappForm = document.getElementById('whatsappForm');
     const pages = document.querySelectorAll('.page');
-
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
     // Cart array
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
